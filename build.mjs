@@ -2,7 +2,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { gunzipSync } from 'node:zlib';
 
-const encoded = fs.readFileSync('site.gz.b64', 'utf8').trim();
+const encoded = [
+  fs.readFileSync('site01.b64', 'utf8').trim(),
+  fs.readFileSync('site02.b64', 'utf8').trim(),
+].join('');
+
 const html = gunzipSync(Buffer.from(encoded, 'base64')).toString('utf8');
 
 for (const marker of ['Quantum Crypto Studio','miniQuiz10','Final assessment','Flip for details']) {
