@@ -1,0 +1,80 @@
+c"><button><span>Three levels of entities vulnerable to quantum attack</span><span>+</span></button><div class="inner"><ul><li><strong>Cryptosystems</strong>: algorithms and the key-management processes around them.</li><li><strong>Security protocols</strong>: protocols whose security depends on vulnerable public-key primitives.</li><li><strong>Products</strong>: real systems built on those protocols and cryptosystems.</li></ul></div></div>
+      </div>
+    
+      <div class="mini-quiz" id="miniQuiz9">
+        <div class="mini-quiz-head">
+          <h4>Quick check · Module 9</h4>
+          <span>2 questions</span>
+        </div>
+        <div class="mini-quiz-body"></div>
+        <div class="mini-score"></div>
+      </div>
+</section>
+
+    <section id="m10" class="reveal">
+      <div class="section-head">
+        <div><div class="kicker">Module 10</div><h3>Major post-quantum families</h3></div>
+        <p>The lecture does not say there is one universally best replacement. Instead, it introduces several major mathematical families that could underpin post-quantum encryption, key establishment and signatures.</p>
+      </div>
+      <div class="grid2">
+        <div class="card" data-pop="lattice"><h4>Lattice-based cryptography</h4><p>Builds security from hard problems on lattices. The lecture notes that lattice schemes are relatively simple, efficient and highly parallelisable. NTRU is mentioned as a widely studied family.</p></div>
+        <div class="card" data-pop="code"><h4>Code-based cryptography</h4><p>Uses hard problems related to error-correcting codes. The lecture notes fast performance but often very large key sizes.</p></div>
+        <div class="card" data-pop="multi"><h4>Multivariate polynomial cryptography</h4><p>Relies on the difficulty of solving systems of multivariate quadratic polynomials over finite fields. Large key sizes are a common issue.</p></div>
+        <div class="card" data-pop="hashsig"><h4>Hash-based signatures</h4><p>Creates signatures from hash functions. Merkle trees help reduce long-term public-key size and support many signatures, but state management can be tricky.</p></div>
+      </div>
+      <div class="accordion" style="margin-top:14px">
+        <div class="acc"><button><span>Merkle tree explained simply</span><span>+</span></button><div class="inner"><p>Imagine many one-time signature public keys. Hash each one to create leaves. Then hash pairs of leaves upward until only one value remains. That top value is the <strong>Merkle root</strong>, which acts as a compact public key tied to many individual signatures.</p></div></div>
+        <div class="acc"><button><span>Why there is no single universal winner</span><span>+</span></button><div class="inner"><p>The lecture emphasises that public-key needs are complicated, the scientific understanding of quantum capability is still incomplete, and different candidate families have very different design attributes, security assumptions, key sizes and performance behaviours.</p></div></div>
+      </div>
+    
+      <div class="mini-quiz" id="miniQuiz10">
+        <div class="mini-quiz-head">
+          <h4>Quick check · Module 10</h4>
+          <span>2 questions</span>
+        </div>
+        <div class="mini-quiz-body"></div>
+        <div class="mini-score"></div>
+      </div>
+</section>
+
+    <section id="quiz" class="reveal">
+      <div class="section-head">
+        <div><div class="kicker">Final assessment</div><h3>End-of-lecture quiz</h3></div>
+        <p>Answer the 7-question final quiz below. It mixes the most important ideas from the whole lecture. Feedback appears immediately after each question.</p>
+      </div>
+      <div class="quizWrap" id="quizBox"></div>
+    </section>
+
+    <div class="footer">COMP6013 · Week 7 · Student-facing final version</div>
+  </main>
+</div>
+
+
+<script>
+const qs=(id)=>document.getElementById(id);
+const progress=qs('progress');
+const sideAnchors=[...document.querySelectorAll('#sideLinks a')];
+const sections=[...document.querySelectorAll('main section[id]')];
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const max=h.scrollHeight-h.clientHeight;
+  progress.style.width=(max>0?(h.scrollTop/max)*100:0)+'%';
+  let current='intro';
+  sections.forEach(sec=>{if(window.scrollY>=sec.offsetTop-180)current=sec.id;});
+  sideAnchors.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));
+});
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+document.querySelectorAll('.acc button').forEach(btn=>btn.addEventListener('click',()=>{
+  const acc=btn.parentElement; acc.classList.toggle('open');
+  btn.querySelector('span:last-child').textContent=acc.classList.contains('open')?'−':'+';
+}));
+
+const deviceInfo={
+  rfid:`<h4>RFID</h4><p>RFID tags are tiny and cheap, so they are classic examples of constrained devices. Yet they may still need <strong>authentication</strong> to stop cloning or tampering, and <strong>privacy</strong> to stop unauthorised readers from tracking or extracting information.</p><div class="quick">Example: a warehouse tag should answer the authorised scanner, but not leak useful information to any nearby attacker.</div>`,
+  home:`<h4>Smart home devices</h4><p>Smart TVs, appliances and home controllers often have small embedded processors. If attackers gain access, they may issue illegal commands, alter software or invade privacy. Because updateable software is common, authenticity of updates is important.</p><div class="quick">Example: a smart lock must not accept fake commands just because the device is low power.</div>`,
+  farm:`<h4>Agriculture</h4><p>Wireless sensors can measure temperature, humidity or soil state, while actuators may control irrigation, shading or ventilation. The devices are cheap, numerous and often battery-powered, so security must be lightweight.</p><div class="quick">Example: an attacker changing irrigation commands could damage crops even if they never steal data.</div>`,
+  medical:`<h4>Medical sensors</h4><p>Medical monitoring devices collect sensitive health data. They may be tiny and low power, so security must protect confidentiality and integrity without exhausting the device.</p><div class="quick">Example: a wearable monitor should not leak a patient’s readings or accept forged measurement values.</div>`,
+  industrial:`<h4>Industrial and critical systems</h4><p>Connected controllers, robots and operational devices improve efficiency, but the consequences of failure are much higher. Authentication, authorisation and availability are essential because incorrect commands or blocked commands can cause real-world harm.</p><div class="quick">Example: in a plant or utility network, denial of service can be a safety issue, not just an inconvenience.</div>`,
+  car:`<h4>Automobiles</h4><p>Vehicle systems communicate internally and externally 
