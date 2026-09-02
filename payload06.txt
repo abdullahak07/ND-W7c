@@ -1,0 +1,75 @@
+o implement crypto on small devices and <strong>what kinds</strong> of lightweight primitives are commonly discussed.</p>
+      </div>
+      <div class="grid3">
+        <div class="card" data-pop="parallel"><h4>Parallel / unrolled</h4><p>More operations happen at once, giving better speed, but it uses more hardware area and often more cost.</p></div>
+        <div class="card" data-pop="rolled"><h4>Round-wise / rolled</h4><p>One round at a time. A common middle ground between speed and area.</p></div>
+        <div class="card" data-pop="serial"><h4>Serial</h4><p>Processes smaller pieces over more steps. Often the smallest in area but slowest in time.</p></div>
+      </div>
+      <div class="grid3" style="margin-top:14px">
+        <div class="card" data-pop="sea"><h4>SEA</h4><p>A lightweight block cipher designed to scale across sizes and keep implementation compact.</p><span class="mini-tag">block cipher</span></div>
+        <div class="card" data-pop="photon"><h4>PHOTON</h4><p>A lightweight hash family using a sponge structure. Useful where short messages and compact operation matter.</p><span class="mini-tag">hash function</span></div>
+        <div class="card" data-pop="siphash"><h4>SipHash</h4><p>A secure and efficient MAC for short messages. It avoids key expansion and uses minimal internal state.</p><span class="mini-tag">MAC</span></div>
+      </div>
+      <div class="accordion" style="margin-top:14px">
+        <div class="acc"><button><span>What each primitive is trying to protect</span><span>+</span></button><div class="inner"><ul><li><strong>Block ciphers</strong> protect confidentiality by encrypting data.</li><li><strong>Hash functions</strong> compress data into a fixed-size digest for integrity-related uses.</li><li><strong>MACs</strong> provide integrity and authentication, proving that the message comes from someone who knows the shared key.</li></ul></div></div>
+      </div>
+    
+      <div class="mini-quiz" id="miniQuiz7">
+        <div class="mini-quiz-head">
+          <h4>Quick check · Module 7</h4>
+          <span>2 questions</span>
+        </div>
+        <div class="mini-quiz-body"></div>
+        <div class="mini-score"></div>
+      </div>
+</section>
+
+    <section id="m8" class="reveal">
+      <div class="section-head">
+        <div><div class="kicker">Module 8</div><h3>Quantum basics: why post-quantum cryptography became necessary</h3></div>
+        <p>Post-quantum cryptography is about making cryptographic algorithms safe against the possible development of large-scale quantum computers. The lecture focuses mainly on the threat to <strong>asymmetric cryptography</strong>.</p>
+      </div>
+      <div class="grid2">
+        <div class="card" data-pop="quantum"><h4>Quantum computing</h4><p>Quantum computing represents information using physical principles from quantum mechanics. It is not just a faster normal computer; it uses a different computational model.</p></div>
+        <div class="card" data-pop="qubit"><h4>Qubit</h4><p>A qubit is the quantum analogue of a bit. Unlike a classical bit, it can exist in a <strong>superposition</strong> of states before measurement.</p></div>
+      </div>
+      <div class="accordion" style="margin-top:14px">
+        <div class="acc"><button><span>Superposition and entanglement in simple words</span><span>+</span></button><div class="inner"><p><strong>Superposition</strong> means a qubit can be in a mixture of 0 and 1 until measured. <strong>Entanglement</strong> means qubits can become linked so that the combined state has structure you cannot explain by treating each qubit separately. These properties help explain why some problems can be attacked very differently on a quantum computer.</p></div></div>
+      </div>
+    
+      <div class="mini-quiz" id="miniQuiz8">
+        <div class="mini-quiz-head">
+          <h4>Quick check · Module 8</h4>
+          <span>2 questions</span>
+        </div>
+        <div class="mini-quiz-body"></div>
+        <div class="mini-score"></div>
+      </div>
+</section>
+
+    <section id="m9" class="reveal">
+      <div class="section-head">
+        <div><div class="kicker">Module 9</div><h3>Quantum risk: Shor, Grover, cryptoperiod and vulnerable systems</h3></div>
+        <p>The lecture distinguishes between two major quantum impacts. <strong>Shor’s algorithm</strong> threatens public-key systems based on factoring or discrete logarithms. <strong>Grover’s algorithm</strong> weakens brute-force resistance for symmetric crypto and hashes, but in a more manageable way.</p>
+      </div>
+      <div class="grid2">
+        <div class="card" data-pop="shor"><h4>Shor’s algorithm</h4><p>Targets integer factorisation and discrete logarithms efficiently. That is why RSA, DH, DSA, ECDH and ECDSA-style systems are considered vulnerable.</p><div class="quick">Big conclusion: many current public-key foundations need replacement, not just bigger keys.</div></div>
+        <div class="card" data-pop="grover"><h4>Grover’s algorithm</h4><p>Provides a square-root speed-up for search. The lecture’s practical intuition is that a 128-bit symmetric key may need to move toward 256-bit strength, and hash lengths may also need to double for comparable margin.</p><div class="quick">Big conclusion: symmetric cryptography survives better than asymmetric cryptography.</div></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h4>Quantum impact table</h4>
+        <table class="table">
+          <tr><th>Algorithm</th><th>Type</th><th>Purpose</th><th>Impact</th></tr>
+          <tr><td>AES</td><td>Symmetric</td><td>Encryption</td><td class="warn">Larger key sizes needed</td></tr>
+          <tr><td>SHA-2 / SHA-3</td><td>Hash</td><td>Digest / integrity support</td><td class="warn">Larger output needed</td></tr>
+          <tr><td>RSA</td><td>Asymmetric</td><td>Signature, key establishment</td><td class="bad">No longer secure</td></tr>
+          <tr><td>ECDSA / ECDH</td><td>Asymmetric</td><td>Signature, key exchange</td><td class="bad">No longer secure</td></tr>
+          <tr><td>DSA</td><td>Asymmetric</td><td>Signature, key exchange</td><td class="bad">No longer secure</td></tr>
+        </table>
+      </div>
+      <div class="grid2" style="margin-top:14px">
+        <div class="card" data-pop="cryptoperiod"><h4>Cryptoperiod</h4><p>The cryptoperiod is the time span during which a key is authorised for use. Keys should not be used forever because brute-force strength changes, weaknesses can be discovered and associated mechanisms can be attacked.</p></div>
+        <div class="card" data-pop="migration"><h4>Why migration is urgent</h4><p>The lecture points to growing awareness: ETSI activity, NSA attention and NIST’s call for post-quantum submissions. Even before practical quantum computers exist, migration takes time because systems, protocols and products all depend on vulnerable public-key building blocks.</p></div>
+      </div>
+      <div class="accordion" style="margin-top:14px">
+        <div class="ac
