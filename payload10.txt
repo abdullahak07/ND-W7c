@@ -1,0 +1,67 @@
+or Wi‑Fi.</div>`},
+ parallel:{t:'Parallel / unrolled implementation',b:`<p>Parallel hardware performs multiple operations at once.</p><ul><li><strong>Advantage:</strong> high throughput / low latency.</li><li><strong>Cost:</strong> larger silicon area and potentially more power.</li></ul>`},
+ rolled:{t:'Round-wise / rolled implementation',b:`<p>One round is executed, then the same hardware is reused for the next round.</p><ul><li><strong>Advantage:</strong> balanced area and speed.</li><li><strong>Cost:</strong> slower than full unrolling.</li></ul>`},
+ serial:{t:'Serial implementation',b:`<p>Only a fraction of the internal state is processed at a time.</p><ul><li><strong>Advantage:</strong> very small chip area.</li><li><strong>Cost:</strong> many more cycles and longer execution time.</li></ul>`},
+ sea:{t:'SEA — Scalable Encryption Algorithm',b:`<p>SEA is presented as a lightweight block cipher with a Feistel structure. It is designed to scale across block/key sizes and use a small set of operations.</p><div class="drawer-callout">Teaching idea: compact implementation without abandoning diffusion and nonlinearity.</div>`},
+ photon:{t:'PHOTON',b:`<p>PHOTON is a lightweight hash family using a sponge structure similar in spirit to SHA-3, but with much smaller internal states for constrained devices.</p><h4>Why useful</h4><p>Many constrained protocols process short messages, so a compact hash can be more appropriate than a heavyweight general-purpose design.</p>`},
+ siphash:{t:'SipHash',b:`<p>SipHash is a MAC designed for short messages. The lecture highlights three useful properties: secure, efficient and simple.</p><ul><li>No key expansion</li><li>Minimal internal state</li><li>Compression phase followed by finalisation</li></ul>`},
+ quantum:{t:'Quantum computing',b:`<p>Quantum computing uses a different computational model based on quantum physical principles. It is important in cryptography because some quantum algorithms attack the mathematical assumptions behind today’s public-key systems.</p>`},
+ qubit:{t:'Qubit',b:`<p>A qubit is the quantum analogue of a bit.</p><h4>Superposition</h4><p>Before measurement, a qubit can be represented as a combination of 0 and 1 states.</p><h4>Entanglement</h4><p>Multiple qubits can become linked so their joint state cannot be described independently.</p>`},
+ shor:{t:'Shor’s algorithm',b:`<p>Shor’s algorithm efficiently attacks integer factorisation and discrete logarithms on a sufficiently capable quantum computer.</p><h4>Threatened families</h4><ul><li>RSA</li><li>Diffie–Hellman</li><li>DSA</li><li>ECDH</li><li>ECDSA</li></ul><div class="drawer-callout">Key point: simply making RSA/ECC keys larger is not a sustainable long-term answer.</div>`},
+ grover:{t:'Grover’s algorithm',b:`<p>Grover gives a quadratic speed-up for unstructured search. This weakens brute-force resistance but does not destroy symmetric crypto in the same way Shor threatens RSA/ECC.</p><div class="drawer-callout">Lecture rule of thumb: AES-128 → AES-256 for comparable security margin; similarly increase hash output length.</div>`},
+ cryptoperiod:{t:'Cryptoperiod',b:`<p>A cryptoperiod is the authorised-use lifetime of a cryptographic key.</p><h4>Why keys expire</h4><ul><li>Brute-force capability grows over time.</li><li>Cryptanalysis may discover weaknesses.</li><li>Keys or protocols may be exposed through other attacks.</li></ul>`},
+ migration:{t:'Why PQC migration is urgent',b:`<p>Migration is not just replacing one algorithm call. Real systems contain key-management processes, protocols, certificates, products and long-lived encrypted data.</p><div class="drawer-callout">If quantum-capable attacks arrive before migration is complete, vulnerable systems may remain exposed for years.</div>`},
+ lattice:{t:'Lattice-based cryptography',b:`<p>Uses hard mathematical problems on lattices. The lecture notes that lattice approaches can be relatively simple, efficient and highly parallelisable.</p><h4>Example mentioned</h4><p>NTRU is one widely studied lattice-based family.</p>`},
+ code:{t:'Code-based cryptography',b:`<p>Uses hard problems related to error-correcting codes. The lecture highlights Goppa-style ideas as examples.</p><h4>Main trade-off</h4><p>Often fast, but key sizes can be very large.</p>`},
+ multi:{t:'Multivariate polynomial cryptography',b:`<p>Builds security around the difficulty of solving systems of multivariate quadratic equations over finite fields.</p><h4>Main trade-off</h4><p>Digital-signature variants can require large keys.</p>`},
+ hashsig:{t:'Hash-based signatures',b:`<p>Constructs digital signatures from hash functions. Merkle trees let many one-time keys be authenticated under one small root.</p><h4>Main challenge</h4><p>Some schemes require careful state tracking so one-time signing keys are not reused.</p>`},
+ sidechannel:{t:'Side-channel attack',b:`<p>A side-channel attack does not necessarily break the algorithm itself. It exploits information leaked by the physical implementation.</p><h4>Examples</h4><ul><li>Timing differences</li><li>Power consumption</li><li>Electromagnetic emissions</li><li>Acoustic emissions</li></ul><div class="drawer-callout">The secret leaks through behaviour, not through the mathematical specification.</div>`}
+};
+
+
+document.querySelectorAll('[data-pop]').forEach(el=>{
+  const key=el.dataset.pop;
+  const data=popData[key];
+  if(!data) return;
+
+  const frontHTML=el.innerHTML;
+  el.innerHTML=`<div class="flip-inner">
+    <div class="flip-face flip-front">
+      ${frontHTML}
+      <span class="flip-badge">↻ Flip for details</span>
+    </div>
+    <div class="flip-face flip-back">
+      <h4>${data.t}</h4>
+      ${data.b}
+      <span class="flip-badge">↶ Flip back</span>
+    </div>
+  </div>`;
+
+  el.setAttribute('role','button');
+  el.setAttribute('tabindex','0');
+  el.setAttribute('aria-pressed','false');
+
+  const toggleFlip=()=>{
+    const next=!el.classList.contains('flipped');
+    el.classList.toggle('flipped',next);
+    el.setAttribute('aria-pressed',String(next));
+  };
+
+  el.addEventListener('click',toggleFlip);
+  el.addEventListener('keydown',e=>{
+    if(e.key==='Enter' || e.key===' '){
+      e.preventDefault();
+      toggleFlip();
+    }
+  });
+});
+
+const sideText={
+  power:'Power analysis: secret-dependent operations can consume slightly different power. Repeating measurements can reveal patterns correlated with key bits.',
+  timing:'Timing analysis: if some secret-dependent operations take longer than others, precise measurements can leak information about the key or internal state.',
+  em:'Electromagnetic analysis: switching activity inside a chip emits tiny EM signals. Sensitive equipment can sometimes correlate those emissions with secret processing.'
+};
+document.querySelectorAll('[data-side]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-side]').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  document.getElementById('sideExplain').textContent=sideT
