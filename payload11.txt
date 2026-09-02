@@ -1,7 +1,0 @@
-ext[b.dataset.side];
-}));
-
-</script>
-
-</body>
-</html>
