@@ -1,0 +1,101 @@
+ton class="device-tab active" data-k="rfid">RFID</button>
+        <button class="device-tab" data-k="home">Smart home</button>
+        <button class="device-tab" data-k="farm">Agriculture</button>
+        <button class="device-tab" data-k="medical">Medical</button>
+        <button class="device-tab" data-k="industrial">Industrial</button>
+        <button class="device-tab" data-k="car">Automobile</button>
+      </div>
+      <div class="detail-box" id="deviceDetail"></div>
+    
+      <div class="mini-quiz" id="miniQuiz4">
+        <div class="mini-quiz-head">
+          <h4>Quick check · Module 4</h4>
+          <span>2 questions</span>
+        </div>
+        <div class="mini-quiz-body"></div>
+        <div class="mini-score"></div>
+      </div>
+</section>
+
+    <section id="m5" class="reveal">
+      <div class="section-head">
+        <div><div class="kicker">Module 5</div><h3>Security, cost and performance: the core trade-off</h3></div>
+        <p>The lecture stresses that stronger security often increases complexity, silicon area, processing cost or power usage. Lightweight design means making a reasoned balance instead of maximising one dimension blindly.</p>
+      </div>
+      <div class="grid2">
+        <div class="card rangeBox">
+          <h4>Interactive trade-off checker</h4>
+          <label for="security">Security priority <strong id="sv">70</strong></label><input id="security" type="range" min="20" max="100" value="70">
+          <label for="performance">Performance priority <strong id="pv">55</strong></label><input id="performance" type="range" min="20" max="100" value="55">
+          <label for="cost">Cost sensitivity <strong id="cv">60</strong></label><input id="cost" type="range" min="20" max="100" value="60">
+          <div class="quick" id="tradeNote">Balanced profile: moderate resource budget with solid security.</div>
+        </div>
+        <div class="card score-wrap">
+          <div class="ring" id="ring" style="--deg:240deg"><b id="fit">67%</b><span style="position:absolute;top:132px;color:var(--muted);font-weight:700">design fit</span></div>
+          <p style="margin:18px 0 0;color:var(--muted);text-align:center;max-width:420px">This is an illustrative teaching widget. It is there to show the idea of balancing goals, not to calculate a formal standard score.</p>
+        </div>
+      </div>
+      <div class="accordion" style="margin-top:14px">
+        <div class="acc"><button><span>What happens if we push for maximum security?</span><span>+</span></button><div class="inner"><p>Longer keys, more rounds or more complex designs can improve security, but often reduce throughput and increase area or energy use. That may be fine for a server but not for a battery-powered tag or sensor.</p></div></div>
+        <div class="acc"><button><span>What happens if we optimise only for cost?</span><span>+</span></button><div class="inner"><p>Very cheap or tiny implementations may become too slow, too fragile or too weak. The aim is not “as light as possible,” but “light enough while still secure enough for the task.”</p></div></div>
+      </div>
+    
+      <div class="mini-quiz" id="miniQuiz5">
+        <div class="mini-quiz-head">
+          <h4>Quick check · Module 5</h4>
+          <span>2 questions</span>
+        </div>
+        <div class="mini-quiz-body"></div>
+        <div class="mini-score"></div>
+      </div>
+</section>
+
+    <section id="m6" class="reveal">
+      <div class="section-head">
+        <div><div class="kicker">Module 6</div><h3>Side-channel attacks: when the device leaks the secret</h3></div>
+        <p>A cryptosystem can be mathematically strong and still fail because the physical device leaks useful information. The lecture highlights timing, power, electromagnetic and acoustic leakage.</p>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h4>Live leakage visualiser</h4>
+          <div class="sidechannel-lab" id="sideLab">
+            <div class="oscope-grid"></div>
+            <div class="leak-chip">Secret operation running</div>
+            <div class="trace power"><span class="trace-label">POWER</span><svg viewBox="0 0 1000 100" preserveAspectRatio="none"><polyline points="0,55 45,55 65,25 85,70 120,40 155,62 190,30 230,60 280,45 320,25 350,70 390,38 430,63 470,31 520,59 560,45 610,20 650,70 700,42 750,60 800,32 850,58 910,40 970,58 1000,50" fill="none" stroke="#5b74ff" stroke-width="4"/></svg></div>
+            <div class="trace time"><span class="trace-label">TIMING</span><svg viewBox="0 0 1000 100" preserveAspectRatio="none"><polyline points="0,70 80,70 80,30 180,30 180,70 300,70 300,20 390,20 390,70 520,70 520,35 620,35 620,70 760,70 760,25 860,25 860,70 1000,70" fill="none" stroke="#1ca7a1" stroke-width="4"/></svg></div>
+            <div class="trace em"><span class="trace-label">EM</span><svg viewBox="0 0 1000 100" preserveAspectRatio="none"><polyline points="0,55 40,45 80,65 120,35 160,70 200,40 240,60 280,30 320,72 360,38 400,65 440,35 480,68 520,32 560,62 600,40 640,70 680,30 720,66 760,38 800,64 840,34 880,70 920,40 960,60 1000,45" fill="none" stroke="#ff8f70" stroke-width="4"/></svg></div>
+          </div>
+          <div class="side-actions">
+            <button class="active" data-side="power">Power leakage</button>
+            <button data-side="timing">Timing leakage</button>
+            <button data-side="em">EM leakage</button>
+          </div>
+          <div id="sideExplain">Power analysis: different secret-dependent operations can consume slightly different amounts of power. Repeating measurements can reveal patterns correlated with key bits.</div>
+        </div>
+        <div class="card" data-pop="sidechannel">
+          <h4>How a side-channel attack works</h4>
+          <div class="attack-flow">
+            <div class="node">Observe device</div><div class="arrow">→</div>
+            <div class="node">Measure leakage</div><div class="arrow">→</div>
+            <div class="node">Correlate behaviour</div><div class="arrow">→</div>
+            <div class="node">Infer key bits</div>
+          </div>
+          <p><strong>Main idea:</strong> the attacker does not directly break the math; they exploit clues produced while the device is running the algorithm.</p>
+          <div class="quick">Countermeasure examples: random delays, dummy cycles, balanced hardware design, masking and other methods that reduce correlation between secrets and observable behaviour.</div>
+        </div>
+      </div>
+    
+      <div class="mini-quiz" id="miniQuiz6">
+        <div class="mini-quiz-head">
+          <h4>Quick check · Module 6</h4>
+          <span>2 questions</span>
+        </div>
+        <div class="mini-quiz-body"></div>
+        <div class="mini-score"></div>
+      </div>
+</section>
+
+    <section id="m7" class="reveal">
+      <div class="section-head">
+        <div><div class="kicker">Module 7</div><h3>Lightweight primitives and implementation styles</h3></div>
+        <p>The lecture covers both <strong>how</strong> t
